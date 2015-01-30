@@ -1,10 +1,11 @@
 import os
+import os.path
 import sys
 
-os.chdir("/home/govtrack/boundaries_us")
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(".")
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
-import django.core.handlers.wsgi
-application = django.core.handlers.wsgi.WSGIHandler()
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
 
