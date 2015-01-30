@@ -18,21 +18,27 @@ state_fips_codes = {
 def get_innerpt(feature):
 	return "POINT(%f %f)" % (float(feature.get("INTPTLON")), float(feature.get("INTPTLAT")))
 
-def register_boundary(layer_name, nice_name, tiger_name, name_func, id_func):
-	boundaries.register('2012-%s' % layer_name,
-		name='United States - %s (2012)' % nice_name,
-		singular='United States - %s (2012)' % nice_name,
-		domain='United States',
-		last_updated=date(2012, 8, 17),
-		name_func=name_func,
-		id_func=id_func,
-		slug_func=id_func,
-		label_point_func=get_innerpt,
-		authority='United States Census',
-		source_url='http://www.census.gov/geo/maps-data/data/tiger-line.html',
-		#licence_url='',
-		data_url='http://www2.census.gov/geo/tiger/TIGER2012/%s/tl_2012_us_%s.zip' % (tiger_name.upper(), tiger_name.lower()),
-		#notes='',
-		encoding='iso-8859-1',
-	)
+
+def register_boundary(layer_name, nice_name, tiger_name, name_func, id_func,
+        year=2014):
+    update_dates = {
+        2012: date(2012, 8, 17),
+        2014: date(2012, 8, 19),
+    }
+    boundaries.register('%d-%s' % (year, layer_name),
+            name='United States - %s (%d)' % (nice_name, year),
+            singular='United States - %s (%d)' % (nice_name, year),
+            domain='United States',
+            last_updated=update_dates[year],
+            name_func=name_func,
+            id_func=id_func,
+            slug_func=id_func,
+            label_point_func=get_innerpt,
+            authority='United States Census',
+            source_url='http://www.census.gov/geo/maps-data/data/tiger-line.html',
+            #licence_url='',
+            data_url='http://www2.census.gov/geo/tiger/TIGER%d/%s/tl_%d_us_%s.zip' % (year, tiger_name.upper(), year, tiger_name.lower()),
+            #notes='',
+            encoding='iso-8859-1',
+    )
 

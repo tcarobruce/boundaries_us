@@ -10,7 +10,7 @@
 #
 # into this directory. Then run:
 #
-#     python manage.py loadshapefiles --only zctas
+#     python manage.py loadshapefiles --only 2014-zctas
 #
 
 import sys
@@ -31,6 +31,7 @@ def get_feature_name(mode):
 	return g
 
 census_helpers.register_boundary("zctas", "ZCTAs", "zcta5",
-	get_feature_name("name"),
-	get_feature_name("id"))
+        get_feature_name("name"),
+        get_feature_name("id"), 
+        year=2014)
 
